@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using contracted.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +33,10 @@ namespace contracted
     {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
       services.AddTransient<IDbConnection>(x => CreateDBContext());
+
+      //Register all repos
+      services.AddTransient<ContractorsRepository>();
+      services.AddTransient<JobsRepository>();
     }
 
     //opens a connection to the database and returns the connection
@@ -55,7 +60,7 @@ namespace contracted
         app.UseHsts();
       }
 
-      app.UseHttpsRedirection();
+      //   app.UseHttpsRedirection();
       app.UseMvc();
     }
   }
